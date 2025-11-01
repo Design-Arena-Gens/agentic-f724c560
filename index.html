@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你好 - 欢迎</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .greeting {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .time {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            animation: slideUp 0.8s ease-out 0.4s both;
+        }
+
+        .decorative {
+            margin-top: 3rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .decorative span {
+            font-size: 3rem;
+            display: inline-block;
+            margin: 0 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .interactive-area {
+            margin-top: 3rem;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .greeting {
+                font-size: 1.5rem;
+            }
+            .time {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>你好</h1>
+        <div class="greeting" id="greeting">欢迎光临</div>
+        <div class="time" id="time"></div>
+
+        <div class="decorative">
+            <span>🌸</span>
+            <span>🎋</span>
+            <span>🏮</span>
+        </div>
+
+        <div class="interactive-area">
+            <button onclick="showMessage()">点击问候</button>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const timeString = now.toLocaleTimeString('zh-CN');
+
+            document.getElementById('time').textContent = timeString;
+
+            let greetingText = '';
+            if (hours >= 5 && hours < 12) {
+                greetingText = '早上好！';
+            } else if (hours >= 12 && hours < 14) {
+                greetingText = '中午好！';
+            } else if (hours >= 14 && hours < 18) {
+                greetingText = '下午好！';
+            } else if (hours >= 18 && hours < 22) {
+                greetingText = '晚上好！';
+            } else {
+                greetingText = '夜深了，注意休息！';
+            }
+
+            document.getElementById('greeting').textContent = greetingText;
+        }
+
+        function showMessage() {
+            const messages = [
+                '很高兴见到你！😊',
+                '希望你今天过得愉快！🌟',
+                '祝你心想事成！✨',
+                '保持微笑，生活美好！🌈',
+                '加油，你是最棒的！💪'
+            ];
+
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const messageElement = document.getElementById('message');
+
+            messageElement.textContent = randomMessage;
+            messageElement.classList.add('show');
+
+            setTimeout(() => {
+                messageElement.classList.remove('show');
+            }, 3000);
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
